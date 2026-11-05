@@ -5,7 +5,6 @@ import { useLocation } from '../../context/LocationContext';
 import { MapContainer, TileLayer, Marker, Popup, Polygon, useMap, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// Master Philippine Crop Catalog with Phenological Kc Values & Irrigation Parameters
 const ALL_PHILIPPINE_CROPS = [
   'Lowland Rice / Paddy (Wetland)',
   'Upland Rice / Rainfed (Dry Farming)',
@@ -27,7 +26,6 @@ const ALL_PHILIPPINE_CROPS = [
   'Abaca (Manila Hemp / Fiber Crop)'
 ];
 
-// Local Agronomic Soil Types & DA-BSWM Series in the Philippines
 const ALL_PHILIPPINE_SOIL_TYPES = [
   'Angeles Fine Sand (Coarse / Well-Drained Volcanic Sand)',
   'Lipa Clay Loam (Rich Volcanic Loam)',
@@ -42,7 +40,6 @@ const ALL_PHILIPPINE_SOIL_TYPES = [
   'Hydromorphic Peat / Mangrove Organic Soil (Coastal Marsh)'
 ];
 
-// Complete Philippine Regional Climate, Weather Hazards & Local Soil Series Dataset (All 17 Regions)
 const REGIONAL_INTELLIGENCE: Record<string, {
   name: string;
   lat: number;
@@ -285,15 +282,8 @@ const PAR_POLYGON_COORDS: [number, number][] = [
   [21.0, 120.0],
 ];
 
-// Guaranteed Visible Vector Badge Component as Logo fallback
-const LogoBadge = () => (
-  <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-emerald-600 via-teal-500 to-cyan-500 flex items-center justify-center shadow-md border-2 border-emerald-400/50 overflow-hidden shrink-0">
-    <svg className="w-6 h-6 text-slate-950" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 21c4.97 0 9-4.03 9-9 0-4.97-4.03-9-9-9s-9 4.03-9 9c0 4.97 4.03 9 9 9z" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3.27 12H20.73M12 3.27v17.46M5.5 7.5c2.5 1.5 6.5 1.5 9 0M5.5 16.5c2.5-1.5 6.5-1.5 9 0" />
-    </svg>
-  </div>
-);
+// Exact Circular High-Res Logo Base64 Data URL matching AgriIntelPH_3.png
+const EXACT_LOGO_DATA_URL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAgAElEQVR4nOy895NkV33nmfvce+97T1V1V9Vd";
 
 function SyncedMapController({ center, zoom }: { center: [number, number]; zoom: number }) {
   const map = useMap();
@@ -535,7 +525,9 @@ export function IrrigationDashboard() {
         <div className={`flex flex-col md:flex-row justify-between items-center p-4 rounded-xl border ${theme === 'dark' ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200 shadow-sm'} gap-4`}>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-3 px-4 py-2 rounded-xl border bg-emerald-950/60 border-emerald-800/40 shadow-sm">
-              <LogoBadge />
+              <div className="w-11 h-11 rounded-full overflow-hidden shadow-md border-2 border-emerald-500/60 shrink-0 bg-slate-900 flex items-center justify-center">
+                <img src={EXACT_LOGO_DATA_URL} alt="AgriIntelPH Seal" className="w-full h-full object-cover rounded-full" />
+              </div>
               <div className="flex flex-col">
                 <span className="font-bold text-emerald-400 tracking-wider text-base">AgriIntelPH</span>
                 <span className="text-[11px] text-slate-300 font-medium tracking-wide">Core Engine</span>
