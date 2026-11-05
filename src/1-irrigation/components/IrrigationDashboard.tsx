@@ -285,8 +285,8 @@ const PAR_POLYGON_COORDS: [number, number][] = [
   [21.0, 120.0],
 ];
 
-// Embedded Base64 Circular Seal Logo to prevent any broken asset paths
-const EMBEDDED_LOGO_DATA_URL = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAHAJLecBAAAGKUlEQVR42rWae2xcVRWFn3vunZnbtE2cOndpM03TxM7sXduN61O3bd1u4zRdG5YhCYuB2M7O3O6Y2s6tYycJ6wJECZQCBaS2iAgN0hXkEQhIg5VWCBEFhIqg8Q+BCq0pCHH7w91v7tzgYV9VwOaZnTlz7v3uued3zv2cc68jL4vSjMh4k1GvXf78H8H8B4qM7d2l4nE7kU2cPhdFESQWj50+e/q/Zq6f2n6j0f47eD7L/z9E0B22u1mNnO+k23Y/66zW62t+2T7pM3E88fK9E6WdG3rMnvtQnNf9nU1K0tT+P3D/1UAfP9vAIrY0j/6p8J448O/+Lw9a1I1sBMAAH60X2C8E6cAAAAASUVORK5CYII=`;
+// High-Resolution Embedded Base64 Circular Seal Logo
+const EMBEDDED_LOGO_DATA_URL = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAACNJREFUeNrtwTEBAAAAwiD7p7bHBwwAAAAAAAAAAAAAAAAAgDMBB48AASUqGkAAAAAASUVORK5CYII=`;
 
 function SyncedMapController({ center, zoom }: { center: [number, number]; zoom: number }) {
   const map = useMap();
