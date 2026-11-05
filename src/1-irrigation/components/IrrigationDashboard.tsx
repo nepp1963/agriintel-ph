@@ -876,16 +876,19 @@ export function IrrigationDashboard() {
               </div>
             </div>
 
-            <MapStyleToolbar/>
+            <MapStyleToolbar />
 
             <div className={`w-full rounded-xl overflow-hidden border relative ${theme === 'dark' ? 'border-slate-800' : 'border-slate-300'}`} style={{ height: '420px' }}>
-              <MapContainer '100%' '100%', center="{[location.lat," height: location.lng]} style="{{" width: zoom="{sharedZoom}" }}>
-                <SyncedMapController center="{[location.lat," location.lng]} zoom="{sharedZoom}"/>
-                <MapEventsHandler onClickChange="{(lat," onZoomChange="{setSharedZoom}"> {
-                  handleMapLocationSelect(lat, lng);
-                }} />
-                <TileLayer attribution="{activeAttribution}" key="{mapViewMode}" url="{activeTileUrl}"/>
-                <Marker location.lng]} position="{[location.lat,">
+              <MapContainer center={[location.lat, location.lng]} zoom={sharedZoom} style={{ height: '100%', width: '100%' }}>
+                <SyncedMapController center={[location.lat, location.lng]} zoom={sharedZoom} />
+                <MapEventsHandler 
+                  onZoomChange={setSharedZoom} 
+                  onClickChange={(lat, lng) => {
+                    handleMapLocationSelect(lat, lng);
+                  }} 
+                />
+                <TileLayer attribution={activeAttribution} url={activeTileUrl} />
+                <Marker position={[location.lat, location.lng]}>
                   <Popup>
                     <div className="text-xs space-y-1">
                       <strong>📍 Topographic Point Analysis</strong><br/>
@@ -961,14 +964,14 @@ export function IrrigationDashboard() {
               </div>
             </div>
 
-            <MapStyleToolbar/>
+            <MapStyleToolbar />
 
             <div className={`w-full rounded-xl overflow-hidden border ${theme === 'dark' ? 'border-slate-800' : 'border-slate-300'}`} style={{ height: '380px' }}>
-              <MapContainer '100%' '100%', center="{[location.lat," height: location.lng]} style="{{" width: zoom="{sharedZoom}" }}>
-                <SyncedMapController center="{[location.lat," location.lng]} zoom="{sharedZoom}"/>
-                <MapEventsHandler onClickChange="{(lat," onZoomChange="{setSharedZoom}"> handleMapLocationSelect(lat, lng)} />
-                <TileLayer attribution="{activeAttribution}" key="{mapViewMode}" url="{activeTileUrl}"/>
-                <Marker location.lng]} position="{[location.lat,"><Popup>{activeRegionData.name}</Popup></Marker>
+              <MapContainer center={[location.lat, location.lng]} zoom={sharedZoom} style={{ height: '100%', width: '100%' }}>
+                <SyncedMapController center={[location.lat, location.lng]} zoom={sharedZoom} />
+                <MapEventsHandler onZoomChange={setSharedZoom} onClickChange={(lat, lng) => handleMapLocationSelect(lat, lng)} />
+                <TileLayer attribution={activeAttribution} url={activeTileUrl} />
+                <Marker position={[location.lat, location.lng]}><Popup>{activeRegionData.name}</Popup></Marker>
               </MapContainer>
             </div>
           </div>
@@ -987,17 +990,20 @@ export function IrrigationDashboard() {
               </span>
             </div>
 
-            <MapStyleToolbar/>
+            <MapStyleToolbar />
 
             <div className={`w-full rounded-xl overflow-hidden border ${theme === 'dark' ? 'border-slate-800' : 'border-slate-300'}`} style={{ height: '380px' }}>
-              <MapContainer '100%' '100%', 122.0]} center="{[13.0," height: style="{{" width: zoom="{5}" }}>
-                <SyncedMapController center="{[location.lat," location.lng]} zoom="{sharedZoom}"/>
-                <MapEventsHandler onClickChange="{(lat," onZoomChange="{setSharedZoom}"> handleMapLocationSelect(lat, lng)} />
-                <TileLayer attribution="{activeAttribution}" key="{mapViewMode}" url="{activeTileUrl}"/>
+              <MapContainer center={[13.0, 122.0]} zoom={5} style={{ height: '100%', width: '100%' }}>
+                <SyncedMapController center={[location.lat, location.lng]} zoom={sharedZoom} />
+                <MapEventsHandler onZoomChange={setSharedZoom} onClickChange={(lat, lng) => handleMapLocationSelect(lat, lng)} />
+                <TileLayer attribution={activeAttribution} url={activeTileUrl} />
                 
-                <Polygon '#f59e0b', '6, 0.1 2.5, 6', color: dashArray: fillColor: fillOpacity: pathOptions="{{" positions="{PAR_POLYGON_COORDS}" weight: }}/>
+                <Polygon
+                  positions={PAR_POLYGON_COORDS}
+                  pathOptions={{ color: '#f59e0b', weight: 2.5, dashArray: '6, 6', fillColor: '#f59e0b', fillOpacity: 0.1 }}
+                />
 
-                <Marker location.lng]} position="{[location.lat,">
+                <Marker position={[location.lat, location.lng]}>
                   <Popup>
                     <div className="text-xs font-sans">
                       <strong>📍 Selected Target Location</strong><br/>
@@ -1053,14 +1059,14 @@ export function IrrigationDashboard() {
               </div>
             </div>
 
-            <MapStyleToolbar/>
+            <MapStyleToolbar />
 
             <div className={`w-full rounded-xl overflow-hidden border ${theme === 'dark' ? 'border-slate-800' : 'border-slate-300'}`} style={{ height: '420px' }}>
-              <MapContainer '100%' '100%', center="{[location.lat," height: location.lng]} style="{{" width: zoom="{sharedZoom}" }}>
-                <SyncedMapController center="{[location.lat," location.lng]} zoom="{sharedZoom}"/>
-                <MapEventsHandler onClickChange="{(lat," onZoomChange="{setSharedZoom}"> handleMapLocationSelect(lat, lng)} />
-                <TileLayer attribution="{activeAttribution}" key="{mapViewMode}" url="{activeTileUrl}"/>
-                <Marker location.lng]} position="{[location.lat,"><Popup>Geohazard Check: {location.name || "Custom Pin"}</Popup></Marker>
+              <MapContainer center={[location.lat, location.lng]} zoom={sharedZoom} style={{ height: '100%', width: '100%' }}>
+                <SyncedMapController center={[location.lat, location.lng]} zoom={sharedZoom} />
+                <MapEventsHandler onZoomChange={setSharedZoom} onClickChange={(lat, lng) => handleMapLocationSelect(lat, lng)} />
+                <TileLayer attribution={activeAttribution} url={activeTileUrl} />
+                <Marker position={[location.lat, location.lng]}><Popup>Geohazard Check: {location.name || "Custom Pin"}</Popup></Marker>
               </MapContainer>
             </div>
           </div>
@@ -1222,10 +1228,10 @@ export function IrrigationDashboard() {
         )}
 
         {/* Tab 8: Soil Salinity & Leaching */}
-        {activeTab === 'soil' && <SoilSalinityModule/>}
+        {activeTab === 'soil' && <SoilSalinityModule />}
 
         {/* Tab 9: Farm Planning & Survey */}
-        {activeTab === 'farmPlan' && <FarmPlanningModule/>}
+        {activeTab === 'farmPlan' && <FarmPlanningModule />}
 
       </div>
     </div>
