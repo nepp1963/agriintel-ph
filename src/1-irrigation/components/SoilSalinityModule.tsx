@@ -11,7 +11,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-// Comprehensive BSWM Philippine Soil Series Database
+// Comprehensive BSWM Philippine Soil Series Database (including Pampanga & Regional Profiles)
 export const philippineSoilSeries = [
   // Southern Luzon / CALABARZON
   { id: 'lipa_clay_loam', name: 'Lipa Clay Loam', region: 'CALABARZON (Cavite/Batangas/Laguna)', ecThreshold: 1.7, texture: 'Clay Loam', drain: 'Moderate to Well Drained' },
@@ -21,7 +21,9 @@ export const philippineSoilSeries = [
   { id: 'calumpang_clay', name: 'Calumpang Clay', region: 'Laguna Basin / Cavite Lowland', ecThreshold: 1.4, texture: 'Silty Clay', drain: 'Poorly Drained' },
   { id: 'quingua_silt_loam', name: 'Quingua Silt Loam', region: 'Bulacan / Cavite Alluvial', ecThreshold: 1.8, texture: 'Silt Loam', drain: 'Well Drained' },
   
-  // Central & Northern Luzon
+  // Central & Northern Luzon / Pampanga
+  { id: 'angeles_sandy_loam', name: 'Angeles Fine Sand / Sandy Loam', region: 'Pampanga (Porac / Floridablanca / Mabalacat)', ecThreshold: 2.5, texture: 'Coarse Volcanic Sand / Lahar Deposit', drain: 'Excessively Drained' },
+  { id: 'candaba_silty_clay', name: 'Candaba Silty Clay', region: 'Pampanga (Candaba Swamp & Delta)', ecThreshold: 1.3, texture: 'Heavy Alluvial Clay', drain: 'Very Poorly Drained' },
   { id: 'san_manuel_loam', name: 'San Manuel Loam', region: 'Central Luzon (Pampanga/Tarlac)', ecThreshold: 2.0, texture: 'Silt Loam', drain: 'Well Drained' },
   { id: 'maligaya_clay', name: 'Maligaya Clay', region: 'Nueva Ecija / Central Luzon Plain', ecThreshold: 1.3, texture: 'Heavy Clay (Paddy)', drain: 'Poorly Drained' },
   { id: 'luisiana_clay', name: 'Luisiana Clay', region: 'Laguna Uplands / Quezon', ecThreshold: 1.5, texture: 'Latosolic Clay', drain: 'Moderate Drained' },
