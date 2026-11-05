@@ -285,8 +285,15 @@ const PAR_POLYGON_COORDS: [number, number][] = [
   [21.0, 120.0],
 ];
 
-// High-Resolution Embedded Base64 Circular Seal Logo
-const EMBEDDED_LOGO_DATA_URL = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAACNJREFUeNrtwTEBAAAAwiD7p7bHBwwAAAAAAAAAAAAAAAAAgDMBB48AASUqGkAAAAAASUVORK5CYII=`;
+// Guaranteed Visible Vector Badge Component as Logo fallback
+const LogoBadge = () => (
+  <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-emerald-600 via-teal-500 to-cyan-500 flex items-center justify-center shadow-md border-2 border-emerald-400/50 overflow-hidden shrink-0">
+    <svg className="w-6 h-6 text-slate-950" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 21c4.97 0 9-4.03 9-9 0-4.97-4.03-9-9-9s-9 4.03-9 9c0 4.97 4.03 9 9 9z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3.27 12H20.73M12 3.27v17.46M5.5 7.5c2.5 1.5 6.5 1.5 9 0M5.5 16.5c2.5-1.5 6.5-1.5 9 0" />
+    </svg>
+  </div>
+);
 
 function SyncedMapController({ center, zoom }: { center: [number, number]; zoom: number }) {
   const map = useMap();
@@ -528,10 +535,11 @@ export function IrrigationDashboard() {
         <div className={`flex flex-col md:flex-row justify-between items-center p-4 rounded-xl border ${theme === 'dark' ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200 shadow-sm'} gap-4`}>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-3 px-4 py-2 rounded-xl border bg-emerald-950/60 border-emerald-800/40 shadow-sm">
-              <img src={EMBEDDED_LOGO_DATA_URL} alt="AgriIntelPH Logo" className="w-12 h-12 object-contain rounded-full shadow-sm" />
-              <span className="font-bold text-emerald-400 tracking-wider text-base">
-                AgriIntelPH <span className="font-semibold text-slate-200">Core Engine</span>
-              </span>
+              <LogoBadge />
+              <div className="flex flex-col">
+                <span className="font-bold text-emerald-400 tracking-wider text-base">AgriIntelPH</span>
+                <span className="text-[11px] text-slate-300 font-medium tracking-wide">Core Engine</span>
+              </div>
             </div>
             <div className="flex items-center gap-2 text-xs">
               <span className={theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}>Theme:</span>
