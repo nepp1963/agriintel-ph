@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Droplets, Activity, AlertTriangle, CheckCircle2, RefreshCw, Sliders, Waves, Zap } from 'lucide-react';
+import { Droplets, Activity, AlertTriangle, CheckCircle2, RefreshCw, Waves, Zap } from 'lucide-react';
 
 interface CanalZone {
   id: string;
