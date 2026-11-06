@@ -1,7 +1,11 @@
-import { AgriDashboard } from './components/AgriDashboard';
+import { IrrigationDashboard } from './1-irrigation/components/IrrigationDashboard';
 
-function App() {
-  return <AgriDashboard />;
+export function App() {
+  return (
+    <main>
+      <IrrigationDashboard />
+    </main>
+  );
 }
 
 export default App;

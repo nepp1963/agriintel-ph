@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MapContainer, TileLayer, Polygon, Marker, Popup, LayersControl, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { useLocation } from '../../context/LocationContext';
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -24,42 +25,23 @@ interface TyphoonTrackerModuleProps {
   selectedRegion?: string;
 }
 
-function ClickableMarker({ 
-  position, 
-  monsoonName, 
-  rainProb 
-}: { 
-  position: [number, number]; 
-  monsoonName: string; 
-  rainProb: string; 
-}) {
-  const [coords, setCoords] = useState<[number, number]>(position);
+function MapSyncHandler() {
+  const { updateFromCoords, setZoom } = useLocation();
 
   useMapEvents({
     click(e) {
-      setCoords([e.latlng.lat, e.latlng.lng]);
+      updateFromCoords(e.latlng.lat, e.latlng.lng);
     },
+    zoomend(e) {
+      setZoom(e.target.getZoom());
+    }
   });
 
-  return (
-    <Marker position={coords}>
-      <Popup>
-        <div className="text-xs space-y-1 p-0.5">
-          <div className="font-bold text-slate-800 border-b pb-1 mb-1">
-            🌀 PAGASA Monsoonal Status
-          </div>
-          <div><span className="text-slate-500">Active Regime:</span> {monsoonName}</div>
-          <div><span className="text-slate-500">Rain Probability:</span> <strong className="text-rose-600">{rainProb}</strong></div>
-          <div className="text-[10px] text-slate-400 mt-1 pt-1 border-t">
-            Lat: {coords[0].toFixed(2)}°, Lng: {coords[1].toFixed(2)}°
-          </div>
-        </div>
-      </Popup>
-    </Marker>
-  );
+  return null;
 }
 
 export function TyphoonTrackerModule({ selectedRegion = 'luzon' }: TyphoonTrackerModuleProps) {
+  const { location } = useLocation();
   const [selectedMonsoon, setSelectedMonsoon] = useState<'southwest' | 'northeast'>('southwest');
 
   const monsoonData = {
@@ -104,9 +86,6 @@ export function TyphoonTrackerModule({ selectedRegion = 'luzon' }: TyphoonTracke
   const activeMonsoon = monsoonData[selectedMonsoon];
   const activeRegionProbability = activeMonsoon.regionalProbability[selectedRegion as keyof typeof activeMonsoon.regionalProbability] || activeMonsoon.regionalProbability['luzon'];
 
-  // Default coordinate center based on region
-  const defaultCenter: [number, number] = selectedRegion.includes('mindanao') ? [8.0, 125.0] : selectedRegion.includes('visayas') ? [10.5, 123.5] : [14.6, 121.0];
-
   return (
     <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-5 shadow-xl backdrop-blur-md space-y-5">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
@@ -115,7 +94,7 @@ export function TyphoonTrackerModule({ selectedRegion = 'luzon' }: TyphoonTracke
             🌀 PAGASA Typhoon Tracker, PAR Boundary & Monsoon Rainfall
           </h2>
           <p className="text-xs text-slate-400 mt-0.5">
-            Active tropical cyclone tracking, PAR maritime boundary, and monsoon rain enhancement probability. Click map to inspect any coordinate balloon.
+            Active tropical cyclone tracking, PAR maritime boundary, satellite cloud cover, and monsoon rain enhancement probability for <span className="text-emerald-400 font-medium">{location.name}</span>.
           </p>
         </div>
         <span className="text-xs bg-rose-950/80 border border-rose-800 text-rose-400 px-3 py-1 rounded-full font-medium shrink-0">
@@ -123,24 +102,32 @@ export function TyphoonTrackerModule({ selectedRegion = 'luzon' }: TyphoonTracke
         </span>
       </div>
 
-      {/* Status Bulletin Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* Status Bulletin Cards including Cloud Cover & Wind Direction */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-slate-950/80 p-4 rounded-xl border border-slate-800">
-          <span className="text-xs text-slate-400 block font-medium">PAR TROPICAL CYCLONE STATUS</span>
-          <div className="text-base font-bold text-emerald-400 mt-1">No Active TC Inside PAR</div>
-          <span className="text-[11px] text-slate-500 mt-1 block">DOST-PAGASA Public Weather Bulletin</span>
+          <span className="text-xs text-slate-400 block font-medium">SATELLITE CLOUD COVER</span>
+          <div className="text-base font-bold text-sky-400 mt-1">{location.cloudCoverPercent}% Cloud Obscuration</div>
+          <div className="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
+            <div className="bg-sky-500 h-full rounded-full" style={{ width: `${location.cloudCoverPercent}%` }} />
+          </div>
+        </div>
+
+        <div className="bg-slate-950/80 p-4 rounded-xl border border-slate-800">
+          <span className="text-xs text-slate-400 block font-medium">PREVAILING WIND VECTOR</span>
+          <div className="text-base font-bold text-emerald-400 mt-1">{location.windDirection}</div>
+          <span className="text-[11px] text-slate-500 mt-1 block">Speed: {location.windSpeed} m/s ({ (location.windSpeed * 3.6).toFixed(1) } km/h)</span>
         </div>
 
         <div className="bg-slate-950/80 p-4 rounded-xl border border-slate-800">
           <span className="text-xs text-slate-400 block font-medium">TC SYSTEMS OUTSIDE PAR</span>
           <div className="text-base font-bold text-amber-400 mt-1">Typhoon In-fa (2631)</div>
-          <span className="text-[11px] text-slate-500 mt-1 block">1,770 km East Northeast of Extreme Northern Luzon</span>
+          <span className="text-[11px] text-slate-500 mt-1 block">1,770 km East Northeast of Extreme Luzon</span>
         </div>
 
         <div className="bg-slate-950/80 p-4 rounded-xl border border-slate-800">
-          <span className="text-xs text-slate-400 block font-medium">WIND & MOVEMENT VECTOR</span>
-          <div className="text-base font-bold text-sky-400 mt-1">130 km/h (Gusts: 160 km/h)</div>
-          <span className="text-[11px] text-slate-500 mt-1 block">Moving North-Northwestward at 10 km/h</span>
+          <span className="text-xs text-slate-400 block font-medium">PAR CYCLONE STATUS</span>
+          <div className="text-base font-bold text-emerald-400 mt-1">No Active TC Inside PAR</div>
+          <span className="text-[11px] text-slate-500 mt-1 block">DOST-PAGASA Public Weather Bulletin</span>
         </div>
       </div>
 
@@ -192,14 +179,16 @@ export function TyphoonTrackerModule({ selectedRegion = 'luzon' }: TyphoonTracke
         </div>
       </div>
 
-      {/* Map Container with PAR Polygon Overlay & Interactive Monsoon Balloon Marker */}
+      {/* Map Container with PAR Polygon Overlay & Synchronized Location Marker */}
       <div className="w-full rounded-lg overflow-hidden border border-slate-800 relative z-0" style={{ height: '420px' }}>
         <MapContainer
-          center={defaultCenter}
-          zoom={6}
+          center={[location.lat, location.lng]}
+          zoom={location.zoom}
           scrollWheelZoom={true}
           style={{ height: '100%', width: '100%' }}
         >
+          <MapSyncHandler />
+
           <LayersControl position="topright">
             <LayersControl.BaseLayer checked name="OpenStreetMap (Streets)">
               <TileLayer
@@ -217,7 +206,7 @@ export function TyphoonTrackerModule({ selectedRegion = 'luzon' }: TyphoonTracke
           </LayersControl>
 
           {/* Official PAR Polygon Border */}
-          <Polygon 
+          <Polygon
             positions={parCoordinates}
             pathOptions={{
               color: '#f43f5e',
@@ -233,17 +222,28 @@ export function TyphoonTrackerModule({ selectedRegion = 'luzon' }: TyphoonTracke
             </Popup>
           </Polygon>
 
-          {/* Interactive Marker with Monsoon Rain Probability Message Balloon */}
-          <ClickableMarker 
-            position={defaultCenter} 
-            monsoonName={activeMonsoon.name} 
-            rainProb={activeRegionProbability} 
-          />
+          {/* Marker positioned precisely at current LocationContext coordinates */}
+          <Marker position={[location.lat, location.lng]}>
+            <Popup>
+              <div className="text-xs space-y-1 p-0.5">
+                <div className="font-bold text-slate-800 border-b pb-1 mb-1">
+                  🌀 PAGASA Monsoonal Status
+                </div>
+                <div><span className="text-slate-500">Active Regime:</span> {activeMonsoon.name}</div>
+                <div><span className="text-slate-500">Rain Probability:</span> <strong className="text-rose-600">{activeRegionProbability}</strong></div>
+                <div className="text-[10px] text-slate-400 mt-1 pt-1 border-t">
+                  Lat: {location.lat.toFixed(2)}°, Lng: {location.lng.toFixed(2)}°
+                </div>
+              </div>
+            </Popup>
+          </Marker>
         </MapContainer>
       </div>
       <div className="text-center text-[11px] text-slate-500">
-        Click anywhere inside the PAR map to pin a coordinate and view its monsoonal rainfall probability balloon.
+        Zooming or panning here or on other tabs synchronizes seamlessly across all AgriIntel maps.
       </div>
     </div>
   );
 }
+
+export default TyphoonTrackerModule;
